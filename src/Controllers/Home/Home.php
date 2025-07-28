@@ -1,6 +1,6 @@
 <?php
 namespace Controllers\Home;
-
+//Pagina de Home
 use Controllers\PublicController;
 use Views\Renderer;
 use Utilities\Context;
