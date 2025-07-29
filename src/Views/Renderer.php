@@ -445,20 +445,12 @@ class Renderer
                 $page = substr($node, $pageStart, $pageValueLength);
                 $query = substr($node, $pageEnd + 1);
 
-<<<<<<< HEAD
-                $url = "/" . $basedir . "/" . str_replace(array("_",".","-"), "/", $page);
-=======
                 $url = $basedir . "/" . str_replace(array("_",".","-"), "/", $page);
->>>>>>> edcf44993d693219f0fdbb6f01ac081efed1f09e
                 $url .= strlen($query)?"/?".$query:"/";
                 $htmlBuffer .= $url;
             } else {
                 if ($node == "index.php") {
-<<<<<<< HEAD
-                    $htmlBuffer .= "/" . $basedir . "/index";
-=======
                     $htmlBuffer .=  $basedir . "/index";
->>>>>>> edcf44993d693219f0fdbb6f01ac081efed1f09e
                 } else {
                     $htmlBuffer .= $node;
                 }

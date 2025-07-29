@@ -3,13 +3,6 @@
 namespace Utilities;
 
 use Dao\Security\Security as DaoSecurity;
-<<<<<<< HEAD
-
-class Security
-{
-    private function __construct() {}
-    private function __clone() {}
-=======
 class Security {
     private function __construct()
     {
@@ -19,7 +12,6 @@ class Security {
     {
         
     }
->>>>>>> edcf44993d693219f0fdbb6f01ac081efed1f09e
     public static function logout()
     {
         unset($_SESSION["login"]);
@@ -33,11 +25,7 @@ class Security {
             "userEmail" => $userEmail
         );
     }
-<<<<<<< HEAD
-    public static function isLogged(): bool
-=======
     public static function isLogged():bool
->>>>>>> edcf44993d693219f0fdbb6f01ac081efed1f09e
     {
         return isset($_SESSION["login"]) && $_SESSION["login"]["isLogged"];
     }
@@ -55,11 +43,7 @@ class Security {
         }
         return 0;
     }
-<<<<<<< HEAD
-    public static function isAuthorized($userId, $function, $type = 'FNC'): bool
-=======
     public static function isAuthorized($userId, $function, $type = 'FNC'):bool
->>>>>>> edcf44993d693219f0fdbb6f01ac081efed1f09e
     {
         if (\Utilities\Context::getContextByKey("DEVELOPMENT") == "1") {
             $functionInDb = DaoSecurity::getFeature($function);
@@ -69,11 +53,7 @@ class Security {
         }
         return DaoSecurity::getFeatureByUsuario($userId, $function);
     }
-<<<<<<< HEAD
-    public static function isInRol($userId, $rol): bool
-=======
     public static function isInRol($userId, $rol):bool
->>>>>>> edcf44993d693219f0fdbb6f01ac081efed1f09e
     {
         if (\Utilities\Context::getContextByKey("DEVELOPMENT") == "1") {
             $rolInDb = DaoSecurity::getRol($rol);
