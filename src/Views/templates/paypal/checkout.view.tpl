@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <section class="container-l">
 <section class="depth-4">
   <h1>Checkout</h1>
@@ -40,3 +41,8 @@
 </section>
 
 </section>
+=======
+<form action="index.php?page=checkout_checkout" method="post">
+  <button type="submit">Place Order</button>
+</form>
+>>>>>>> edcf44993d693219f0fdbb6f01ac081efed1f09e

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHP Version 7.2
  *
@@ -10,7 +9,6 @@
  * @version  CVS:1.0.0
  * @link     http://
  */
-
 namespace Controllers;
 
 /**
@@ -32,7 +30,7 @@ abstract class PublicController implements IController
     {
         $this->name = get_class($this);
         \Utilities\Nav::setPublicNavContext();
-        if (\Utilities\Security::isLogged()) {
+        if (\Utilities\Security::isLogged()){
             $layoutFile = \Utilities\Context::getContextByKey("PRIVATE_LAYOUT");
             if ($layoutFile !== "") {
                 \Utilities\Context::setContext(
@@ -42,14 +40,13 @@ abstract class PublicController implements IController
                 \Utilities\Nav::setNavContext();
             }
         }
-        $this->getCartCounter();
     }
     /**
      * Return name of instantiated class
      *
      * @return string
      */
-    public function toString(): string
+    public function toString() :string
     {
         return $this->name;
     }
@@ -63,15 +60,4 @@ abstract class PublicController implements IController
         return $_SERVER["REQUEST_METHOD"] == "POST";
     }
 
-    protected function getCartCounter()
-    {
-        if (\Utilities\Security::isLogged()) {
-            $cartItems = \Dao\Cart\Cart::getAuthCart(\Utilities\Security::getUserId());
-            \Utilities\Context::setContext("CART_ITEMS", count($cartItems));
-        } else {
-            $annonCod = \Utilities\Cart\CartFns::getAnnonCartCode();
-            $cartItems = \Dao\Cart\Cart::getAnonCart($annonCod);
-            \Utilities\Context::setContext("CART_ITEMS", count($cartItems));
-        }
-    }
 }

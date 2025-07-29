@@ -21,7 +21,11 @@ class Cart extends \Dao\Table
         //Sacar el stock de productos con carretilla no autorizada
         $deltaNAutorizada = \Utilities\Cart\CartFns::getUnAuthTimeDelta();
         $sqlCarretillaNAutorizada = "select productId, sum(crrctd) as reserved
+<<<<<<< HEAD
             from carretillaanon where TIME_TO_SEC(TIMEDIFF(now(), crrfching)) <= :delta
+=======
+            from carretillaanom where TIME_TO_SEC(TIMEDIFF(now(), crrfching)) <= :delta
+>>>>>>> edcf44993d693219f0fdbb6f01ac081efed1f09e
             group by productId;";
         $prodsCarretillaNAutorizada = self::obtenerRegistros(
             $sqlCarretillaNAutorizada,
@@ -66,7 +70,11 @@ class Cart extends \Dao\Table
         //Sacar el stock de productos con carretilla no autorizada
         $deltaNAutorizada = \Utilities\Cart\CartFns::getUnAuthTimeDelta();
         $sqlCarretillaNAutorizada = "select productId, sum(crrctd) as reserved
+<<<<<<< HEAD
             from carretillaanon where productId = :productId and TIME_TO_SEC(TIMEDIFF(now(), crrfching)) <= :delta
+=======
+            from carretillaanom where productId = :productId and TIME_TO_SEC(TIMEDIFF(now(), crrfching)) <= :delta
+>>>>>>> edcf44993d693219f0fdbb6f01ac081efed1f09e
             group by productId;";
         $prodsCarretillaNAutorizada = self::obtenerRegistros(
             $sqlCarretillaNAutorizada,
@@ -91,6 +99,7 @@ class Cart extends \Dao\Table
         $productosDisponibles = null;
         $prodsCarretillaAutorizada = null;
         $prodsCarretillaNAutorizada = null;
+<<<<<<< HEAD
         return $productosCurados[$productId];
     }
 
@@ -164,6 +173,9 @@ class Cart extends \Dao\Table
         $deleteSql = "DELETE FROM carretillaanon where anoncod = :anoncod;";
         self::executeNonQuery($sqlstr, ["anoncod" => $anonCod, "usercod" => $usercod]);
         self::executeNonQuery($deleteSql, ["anoncod" => $anonCod]);
+=======
+        return $productosCurados;
+>>>>>>> edcf44993d693219f0fdbb6f01ac081efed1f09e
     }
 
     public static function getProducto($productId)

@@ -2,10 +2,16 @@
 
 namespace Utilities\Paypal;
 
+<<<<<<< HEAD
+=======
+use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
+
+>>>>>>> edcf44993d693219f0fdbb6f01ac081efed1f09e
 class PayPalOrder
 {
     private $_request;
     private $_body = array(
+<<<<<<< HEAD
         "intent" => "CAPTURE",
         "purchase_units" => array(),
         "application_context" => array(
@@ -19,10 +25,26 @@ class PayPalOrder
         "amount" => array(
             "value" => "0.00",
             "currency_code" => "USD",
+=======
+        "intent"=>"CAPTURE",
+        "purchase_units" => array(),
+        "application_context" => array(
+            "cancel_url"=>"",
+            "return_url"=>""
+        )
+    );
+    private $_purchaseUnitTemplate = array(
+        "reference_id"=>"",
+        "custom_id" => "",
+        "amount"=>array(
+            "value"=>"0.00",
+            "currency_code"=>"USD",
+>>>>>>> edcf44993d693219f0fdbb6f01ac081efed1f09e
             "breakdown" => array(
                 "item_total" => array(
                     "currency_code" => "USD",
                     "value" => "0.00"
+<<<<<<< HEAD
                 ),
                 "shipping" => array(
                     "currency_code" => "USD",
@@ -43,6 +65,30 @@ class PayPalOrder
             )
         ),
         "items" => array()
+=======
+                    ),
+                "shipping" => array(
+                    "currency_code" => "USD",
+                    "value" => "0.00"
+                    ),
+                "handling" => array(
+                    "currency_code" => "USD",
+                    "value" => "0.00"
+                    ),
+                "tax_total" => array(
+                    "currency_code" => "USD",
+                    "value" => "0.00"
+                    ),
+                "shipping_discount" => array(
+                    "currency_code" => "USD",
+                    "value" => "0.00"
+                    ),
+                )
+        ),
+        "items" => array(
+
+        )
+>>>>>>> edcf44993d693219f0fdbb6f01ac081efed1f09e
     );
     private $_itemTemplate = array(
         "name" => "",
@@ -62,11 +108,23 @@ class PayPalOrder
         "category" => ""
     );
 
+<<<<<<< HEAD
     public function getOrder()
     {
         return $this->_body;
     }
 
+=======
+    public function createOrder()
+    {
+        $this->_request = new OrdersCreateRequest();
+        $this->_request->prefer("return=representation");
+        $this->_request->body = $this->_body;
+        $paypalClient = \Utilities\Paypal\PayPalClient::client();
+        $response = $paypalClient->execute($this->_request);
+        return array($response->result->links[1], $response);
+    }
+>>>>>>> edcf44993d693219f0fdbb6f01ac081efed1f09e
     public function addItem($name, $description, $sku, $price, $tax, $quantity, $category)
     {
         $newItem = $this->_itemTemplate;
@@ -95,6 +153,10 @@ class PayPalOrder
         $this->_body["purchase_units"][0]["amount"]["breakdown"]["item_total"]["value"] = (string) $itemTotal;
         $this->_body["purchase_units"][0]["amount"]["breakdown"]["tax_total"]["value"] = (string) $taxTotal;
         $this->_body["purchase_units"][0]["amount"]["value"] = (string) $total;
+<<<<<<< HEAD
+=======
+
+>>>>>>> edcf44993d693219f0fdbb6f01ac081efed1f09e
     }
 
     public function  __construct($referenceID, $cancel_url, $return_url)
@@ -105,3 +167,8 @@ class PayPalOrder
         $this->_body["application_context"]["return_url"] = $return_url;
     }
 }
+<<<<<<< HEAD
+=======
+
+?>
+>>>>>>> edcf44993d693219f0fdbb6f01ac081efed1f09e

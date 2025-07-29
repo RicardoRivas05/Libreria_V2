@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <h1>{{SITE_TITLE}}</h1>
 
 <div class="product-list">
@@ -17,3 +18,6 @@
   </div>
   {{endfor products}}
 </div>
+=======
+<h1>{{SITE_TITLE}}</h1>
+>>>>>>> edcf44993d693219f0fdbb6f01ac081efed1f09e
