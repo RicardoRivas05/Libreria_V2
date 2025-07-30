@@ -8,6 +8,7 @@ use Dao\Books\Books;
 
 class Home extends PublicController
 {
+    
     public function run(): void
     {
         // Get top 5 featured books from database
