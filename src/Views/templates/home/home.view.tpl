@@ -9,40 +9,48 @@
        Ver Catálogo
     </a>
     <a href="index.php?page=Home_Carrito"
-   style="display: inline-block; background: #eee; color: #444; padding: 0.5rem 1.2rem; margin-right: 1rem; text-decoration: none; font-weight: 600; border-radius: 4px;">
-   Carrito de Compras
-</a>
+       style="display: inline-block; background: #eee; color: #444; padding: 0.5rem 1.2rem; margin-right: 1rem; text-decoration: none; font-weight: 600; border-radius: 4px;">
+       Carrito de Compras
     </a>
     <a href="index.php?page=Home_Login" 
        style="display: inline-block; background: #eee; color: #444; padding: 0.5rem 1.2rem; text-decoration: none; font-weight: 600; border-radius: 4px;">
        Iniciar Sesión
     </a>
 </section>
-  <h2 style="text-align: center; color: #333; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #ddd;">Libros Recomendados</h2>
 
-     <div style="display: grid; grid-template-columns: repeat(4, 260px); gap: 25px; justify-content: center; padding: 10px;">
-        {{foreach libros}}
-        <div style="border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px; text-align: center; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); height: 100%;">
-            <div style="height: 160px; background-color: #f5f5f5; border-radius: 4px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-    <img src="/3P/Libreria_V2/public/imgs/libros/{{codLibro}}.jpg" 
-         alt="{{nombre}}"
-         style="max-height: 100%; max-width: 100%; object-fit: contain;"
-         onerror="this.src='/3P/Libreria_V2/public/imgs/libros/default.jpg'">
-</div>
-            
-            <div style="font-weight: bold; font-size: 1.1rem; margin-bottom: 5px; color: #2c3e50;">{{nombre}}</div>
-            <div style="font-size: 1.2rem; color: #e74c3c; margin-bottom: 10px;">L. {{precio}}</div>
-            <div style="font-size: 0.9rem; color: #555; margin-bottom: 15px; min-height: 60px; line-height: 1.4;">{{descripcion}}</div>
-            <div style="margin-bottom: 15px; font-size: 0.85rem; color: #7f8c8d;">Disponibles: {{stock}}</div>
-            
-            <form method="post" action="index.php?page=Home_Carrito">
-                <input type="hidden" name="codLibro" value="{{codLibro}}">
-                <input type="hidden" name="nombre" value="{{nombre}}">
-                <input type="hidden" name="precio" value="{{precio}}">
-                <button type="submit" style="background-color: #27ae60; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; width: 100%; font-size: 0.9rem; transition: background-color 0.3s;">
-                    Agregar al Carrito
-                </button>
-            </form>
+<h2 style="text-align: center; color: #333; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #ddd;">Libros Recomendados</h2>
+
+<div style="display: grid; grid-template-columns: repeat(4, 260px); gap: 25px; justify-content: center; padding: 10px;">
+    {{foreach libros}}
+    <div style="border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px; text-align: center; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); height: 100%;">
+        <div style="height: 160px; background-color: #f5f5f5; border-radius: 4px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+            <img src="/3P/Libreria_V2/public/imgs/libros/{{codLibro}}.jpg" 
+                 alt="{{nombre}}"
+                 style="max-height: 100%; max-width: 100%; object-fit: contain;"
+                 onerror="this.src='/3P/Libreria_V2/public/imgs/libros/default.jpg'">
         </div>
-        {{endfor libros}}
+        
+        <div style="font-weight: bold; font-size: 1.1rem; margin-bottom: 5px; color: #2c3e50;">{{nombre}}</div>
+        <div style="font-size: 1.2rem; color: #e74c3c; margin-bottom: 10px;">L. {{precio}}</div>
+        <div style="font-size: 0.9rem; color: #555; margin-bottom: 15px; min-height: 60px; line-height: 1.4;">{{descripcion}}</div>
+        <div style="margin-bottom: 15px; font-size: 0.85rem; color: #7f8c8d;">Disponibles: {{stock}}</div>
+        
+        <form method="post" action="index.php?page=Home_Carrito" style="display: flex; flex-direction: column; gap: 8px;">
+            <input type="hidden" name="accion" value="agregar">
+            <input type="hidden" name="codLibro" value="{{codLibro}}">
+            <input type="hidden" name="nombre" value="{{nombre}}">
+            <input type="hidden" name="precio" value="{{precio}}">
+            
+            <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px;">
+                <label style="font-size: 0.85rem; color: #666;">Cantidad:</label>
+                <input type="number" name="cantidad" value="1" min="1" max="{{stock}}" 
+                       style="width: 60px; padding: 4px; border: 1px solid #ccc; border-radius: 4px; text-align: center;">
+            </div>
+            
+            <button type="submit" style="background-color: #27ae60; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; width: 100%; font-size: 0.9rem; transition: background-color 0.3s;">
+                Agregar al Carrito
+            </button>
+        </form>
     </div>
+    {{endfor libros}}
+</div>
