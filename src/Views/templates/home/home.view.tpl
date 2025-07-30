@@ -36,21 +36,23 @@
         <div style="margin-bottom: 15px; font-size: 0.85rem; color: #7f8c8d;">Disponibles: {{stock}}</div>
         
         <form method="post" action="index.php?page=Home_Carrito" style="display: flex; flex-direction: column; gap: 8px;">
-            <input type="hidden" name="accion" value="agregar">
-            <input type="hidden" name="codLibro" value="{{codLibro}}">
-            <input type="hidden" name="nombre" value="{{nombre}}">
-            <input type="hidden" name="precio" value="{{precio}}">
-            
-            <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px;">
-                <label style="font-size: 0.85rem; color: #666;">Cantidad:</label>
-                <input type="number" name="cantidad" value="1" min="1" max="{{stock}}" 
-                       style="width: 60px; padding: 4px; border: 1px solid #ccc; border-radius: 4px; text-align: center;">
-            </div>
-            
-            <button type="submit" style="background-color: #27ae60; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; width: 100%; font-size: 0.9rem; transition: background-color 0.3s;">
-                Agregar al Carrito
-            </button>
-        </form>
+        <input type="hidden" name="accion" value="agregar">
+        <input type="hidden" name="codLibro" value="{{codLibro}}">
+        <input type="hidden" name="nombre" value="{{nombre}}">
+        <input type="hidden" name="precio" value="{{precio}}">
+        <input type="hidden" name="descripcion" value="{{descripcion}}">
+        <input type="hidden" name="stock" value="{{stock}}">
+        
+        <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px;">
+            <label style="font-size: 0.85rem; color: #666;">Cantidad:</label>
+            <input type="number" name="cantidad" value="1" min="1" max="{{stock}}" 
+                style="width: 60px; padding: 4px; border: 1px solid #ccc; border-radius: 4px; text-align: center;">
+        </div>
+        
+        <button type="submit" style="background-color: #27ae60; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; width: 100%; font-size: 0.9rem; transition: background-color 0.3s;">
+            Agregar al Carrito
+        </button>
+    </form>
     </div>
     {{endfor libros}}
 </div>
