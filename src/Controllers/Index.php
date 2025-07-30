@@ -1,32 +1,13 @@
 <?php
 
-/**
- * PHP Version 7.2
- *
- * @category Public
- * @package  Controllers
- * @author   Orlando J Betancourth <orlando.betancourth@gmail.com>
- * @license  MIT http://
- * @version  CVS:1.0.0
- * @link     http://
- */
-
 namespace Controllers;
 
 use Dao\Cart\Cart;
+use Dao\Books\Books;
 use Utilities\Site;
-use Utilities\Cart\CartFns;
 use Utilities\Security;
+use Views\Renderer;
 
-/**
- * Index Controller
- *
- * @category Public
- * @package  Controllers
- * @author   Orlando J Betancourth <orlando.betancourth@gmail.com>
- * @license  MIT http://
- * @link     http://
- */
 class Index extends PublicController
 {
     /**
@@ -36,44 +17,24 @@ class Index extends PublicController
      */
     public function run(): void
     {
+        // Add CSS for product styling
         Site::addLink("public/css/products.css");
 
-        if ($this->isPostBack()) {
-            if (Security::isLogged()) {
-                $usercod = Security::getUserId();
-                $productId = intval($_POST["productId"]);
-                $product = Cart::getProductoDisponible($productId);
-                if ($product["productStock"] - 1 >= 0) {
-                    Cart::addToAuthCart(
-                        intval($_POST["productId"]),
-                        $usercod,
-                        1,
-                        $product["productPrice"]
-                    );
-                }
-            } else {
-                $cartAnonCod = CartFns::getAnnonCartCode();
-                if (isset($_POST["addToCart"])) {
+        // Fetch top books
+        $featuredBooks = Books::getTopBooks(5);
 
-                    $productId = intval($_POST["productId"]);
-                    $product = Cart::getProductoDisponible($productId);
-                    if ($product["productStock"] - 1 >= 0) {
-                        Cart::addToAnonCart(
-                            intval($_POST["productId"]),
-                            $cartAnonCod,
-                            1,
-                            $product["productPrice"]
-                        );
-                    }
-                }
-            }
-            $this->getCartCounter();
-        }
+        // Fetch available products
+        $availableProducts = Cart::getProductosDisponibles();
 
-        $products = Cart::getProductosDisponibles();
+        // Prepare view data
         $viewData = [
-            "products" => $products,
+            "usuario" => Security::isLogged() ? Security::getUser()["email"] : "Invitado",
+            "libros" => $featuredBooks,
+            "products" => $availableProducts,
+            "USE_URLREWRITE" => getenv("USE_URLREWRITE")
         ];
-        \Views\Renderer::render("index", $viewData);
+
+        // Render the view
+        Renderer::render("index", $viewData);
     }
 }

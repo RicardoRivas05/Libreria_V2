@@ -1,19 +1,18 @@
-<h1>{{SITE_TITLE}}</h1>
-
+<h1>Libros Recomendados</h1>
 <div class="product-list">
-  {{foreach products}}
-  <div class="product" data-productId="{{productId}}">
-    <img src="{{productImgUrl}}" alt="{{productName}}">
-    <h2>{{productName}}</h2>
-    <p>{{productDescription}}</p>
-    <span class="price">{{productPrice}}</span>
-    <span class="stock">Disponible {{productStock}}</span>
-    <form action="index.php?page=index" method="post">
-        <input type="hidden" name="productId" value="{{productId}}">
-        <button type="submit" name="addToCart" class="add-to-cart">
+  {{foreach libros}}
+  <div class="product" data-productId="{{codLibro}}">
+    <img src="/public/imgs/libros/{{codLibro}}.jpg" alt="{{nombre}}">
+    <h2>{{nombre}}</h2>
+    <p>{{descripcion}}</p>
+    <span class="price">L. {{precio}}</span>
+    <span class="stock">Disponible {{stock}}</span>
+    <form action="index.php?page=Home_Carrito" method="post">
+        <input type="hidden" name="codLibro" value="{{codLibro}}">
+        <button type="submit" class="add-to-cart">
           <i class="fa-solid fa-cart-plus"></i>Agregar al Carrito
         </button>
     </form>
   </div>
-  {{endfor products}}
+  {{endfor libros}}
 </div>
