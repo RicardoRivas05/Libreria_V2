@@ -7,6 +7,7 @@ use Utilities\Context;
 
 class Home extends PublicController
 {
+    
     public function run(): void
     {
         error_reporting(E_ALL);
