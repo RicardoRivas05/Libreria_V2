@@ -6,15 +6,6 @@
   <title>{{SITE_TITLE}}</title>
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-<<<<<<< HEAD
-  <link rel="stylesheet" href="/{{BASE_DIR}}/public/css/appstyle.css" />
-  <script src="https://kit.fontawesome.com/{{FONT_AWESOME_KIT}}.js" crossorigin="anonymous"></script>
-  {{foreach SiteLinks}}
-    <link rel="stylesheet" href="/{{~BASE_DIR}}/{{this}}" />
-  {{endfor SiteLinks}}
-  {{foreach BeginScripts}}
-    <script src="/{{~BASE_DIR}}/{{this}}"></script>
-=======
   <link rel="stylesheet" href="{{BASE_DIR}}/public/css/appstyle.css" />
   <script src="https://kit.fontawesome.com/{{FONT_AWESOME_KIT}}.js" crossorigin="anonymous"></script>
   {{foreach SiteLinks}}
@@ -22,7 +13,6 @@
   {{endfor SiteLinks}}
   {{foreach BeginScripts}}
     <script src="{{~BASE_DIR}}/{{this}}"></script>
->>>>>>> edcf44993d693219f0fdbb6f01ac081efed1f09e
   {{endfor BeginScripts}}
 </head>
 <body>
@@ -42,10 +32,6 @@
         {{endfor PUBLIC_NAVIGATION}}
       </ul>
     </nav>
-<<<<<<< HEAD
-    <span>{{if ~CART_ITEMS}}<i class="fa-solid fa-cart-shopping"></i>{{~CART_ITEMS}}{{endif ~CART_ITEMS}}</span>
-=======
->>>>>>> edcf44993d693219f0fdbb6f01ac081efed1f09e
   </header>
   <main>
   {{{page_content}}}
@@ -54,11 +40,7 @@
     <div>Todo los Derechos Reservados {{~CURRENT_YEAR}} &copy;</div>
   </footer>
   {{foreach EndScripts}}
-<<<<<<< HEAD
-    <script src="/{{~BASE_DIR}}/{{this}}"></script>
-=======
     <script src="{{~BASE_DIR}}/{{this}}"></script>
->>>>>>> edcf44993d693219f0fdbb6f01ac081efed1f09e
   {{endfor EndScripts}}
 </body>
 </html>
