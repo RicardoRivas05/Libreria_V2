@@ -6,10 +6,10 @@ use Views\Renderer;
 use Utilities\Context;
 
 class Home extends PublicController
-{
-    
+{ 
     public function run(): void
     {
+
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
         
@@ -24,7 +24,6 @@ class Home extends PublicController
                 ["nav_url" => "index.php?page=Home_Carrito", "nav_label" => "Carrito"],
                 ["nav_url" => "index.php?page=Home_Login", "nav_label" => "Iniciar Sesión"]
             ],
-            
             "usuario" => $_SESSION["userName"] ?? "Invitado",
             "libros" => [
                 [
