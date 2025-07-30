@@ -1,7 +1,6 @@
 <?php
 
 namespace Utilities;
-
 class Context
 {
     static $_context = array();
@@ -28,6 +27,7 @@ class Context
         }
         return $value;
     }
+    
     public static function setArrayToContext(array $contextValues, $saveToSession = false)
     {
         foreach ($contextValues as $name => $value) {
@@ -46,7 +46,6 @@ class Context
             unset($_SESSION[$key]);
         }
     }
-
     private function __construct()
     {
     }
