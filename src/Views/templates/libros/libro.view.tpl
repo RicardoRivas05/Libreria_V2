@@ -1,131 +1,82 @@
-<div class="libro-detalle-container fade-in">
-    <div class="libro-detalle">
-        <div class="libro-imagen-detalle">
-            <img src="{{libro.imagenUrl}}" 
-                 alt="{{libro.titulo}}" 
-                 onerror="this.src='public/images/libro-default.jpg'">
-        </div>
-        
-        <div class="libro-info-detalle">
-            <h1 class="libro-titulo-detalle">{{libro.titulo}}</h1>
-            
-            <div class="libro-meta-detalle">
-                <div class="meta-item-detalle">
-                    <div class="meta-label-detalle"> Autor</div>
-                    <div class="meta-value-detalle">{{libro.autor}}</div>
-                </div>
-                
-                <div class="meta-item-detalle">
-                    <div class="meta-label-detalle"> Género</div>
-                    <div class="meta-value-detalle">{{libro.genero}}</div>
-                </div>
-                
-                <div class="meta-item-detalle">
-                    <div class="meta-label-detalle"> Disponibilidad</div>
-                    <div class="meta-value-detalle">
-                        {{if libro.disponible}}
-                             En stock
-                        {{else}}
-                             Agotado
-                        {{endif}}
-                    </div>
-                </div>
-                
-                <div class="meta-item-detalle">
-                    <div class="meta-label-detalle"> Agregado</div>
-                    <div class="meta-value-detalle">{{libro.creadoEn}}</div>
-                </div>
-            </div>
-            
-            <div class="libro-precio-detalle">
-                 L. {{libro.precio}}
-            </div>
-            
-            <div class="libro-descripcion-detalle">
-                <h3> Descripción</h3>
-                <p>{{libro.descripcion}}</p>
-            </div>
-            
-            <div class="libro-acciones-detalle">
-                <a href="index.php?page=Carrito_Agregar&id={{libro.libroId}}" 
-                   class="btn btn-success" id="btnAddCart">
-                     Agregar al Carrito
-                </a>
-                
-                <a href="index.php?page=Libros_Libros" class="btn btn-outline">
-                    ← Volver al Catálogo
-                </a>
-            </div>
+<section class="book-detail">
+    <div class="book-detail__header">
+        <h1 class="book-detail__title">{{titulo}}</h1>
+        <div class="book-detail__meta">
+            <span class="book-meta__genre">{{genero}}</span>
+            {{if stock}}
+            <span class="book-meta__stock">Disponible ({{stock}} unidades)</span>
+            {{endif stock}}
         </div>
     </div>
     
-    {{if librosRelacionados}}
-    <div class="libros-relacionados">
-        <h3>📚 Libros Relacionados</h3>
-        <div class="books-grid">
-            {{foreach librosRelacionados}}
-            <div class="book-card">
-                <div class="book-image-container">
-                    <img src="{{imagenUrl}}" alt="{{titulo}}">
+    <div class="book-detail__content">
+        <div class="book-detail__image-container">
+            <img src="{{imagenUrl}}" alt="Portada de {{titulo}}" class="book-detail__image">
+            {{ifnot disponible}}
+            <div class="book-detail__badge out-of-stock">AGOTADO</div>
+            {{endifnot disponible}}
+        </div>
+        
+        <div class="book-detail__info">
+            <div class="book-info__section">
+                <h2 class="book-info__heading">Información del Libro</h2>
+                <ul class="book-info__list">
+                    <li><strong>Autor:</strong> {{autor}}</li>
+                    <li><strong>Fecha de Publicación:</strong> {{fechaPublicacion}}</li>
+                    <li><strong>ISBN:</strong> {{isbn}}</li>
+                    <li><strong>Precio:</strong> <span class="book-price">L. {{precio}}</span></li>
+                </ul>
+            </div>
+            
+            <div class="book-info__section">
+                <h2 class="book-info__heading">Descripción</h2>
+                <div class="book-description">
+                    {{descripcion}}
                 </div>
-                <div class="book-content">
-                    <h3>{{titulo}}</h3>
-                    <p class="book-author">{{autor}}</p>
-                    <div class="book-price">L. {{precio}}</div>
-                    <a href="index.php?page=Libros_Libro&id={{libroId}}" class="btn btn-details">
-                        Ver Detalles
+            </div>
+
+            <div class="book-detail__actions">
+                {{if disponible}}
+                <form method="post" action="{{urlCarrito}}" class="add-to-cart-form">
+                    <button type="submit" class="action-btn primary">
+                        <i class="fas fa-cart-plus"></i> Agregar al Carrito
+                    </button>
+                </form>
+                {{endif disponible}}
+                
+                <div class="action-buttons">
+                    <a href="index.php?page=Libros_Libros" class="action-btn secondary">
+                        <i class="fas fa-arrow-left"></i> Volver al Catálogo
+                    </a>
+                    <a href="index.php?page=Home_Carrito" class="action-btn secondary">
+                        <i class="fas fa-shopping-cart"></i> Ver Carrito
                     </a>
                 </div>
             </div>
-            {{endfor}}
         </div>
     </div>
-    {{endif}}
-</div>
+</section>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Feedback al agregar al carrito
-    const btnCart = document.getElementById('btnAddCart');
-    if (btnCart) {
-        btnCart.addEventListener('click', function(e) {
-            const originalText = this.innerHTML;
-            this.innerHTML = ' Agregando...';
-            setTimeout(() => {
-                this.innerHTML = originalText;
-            }, 1000);
-        });
-    }
-
-    // Zoom en imagen
-    const img = document.querySelector('.libro-imagen-detalle img');
-    if (img) {
-        img.addEventListener('click', function() {
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed;
-                top: 0; left: 0;
-                width: 100%; height: 100%;
-                background: rgba(0,0,0,0.9);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 1000;
-                cursor: zoom-out;
-            `;
-            
-            const imgModal = document.createElement('img');
-            imgModal.src = this.src;
-            imgModal.style.maxHeight = '90%';
-            imgModal.style.maxWidth = '90%';
-            
-            modal.appendChild(imgModal);
-            document.body.appendChild(modal);
-            
-            modal.addEventListener('click', () => {
-                document.body.removeChild(modal);
-            });
-        });
-    }
-});
-</script>
+{{if libros_relacionados}}
+<section class="related-books">
+    <h2 class="section-title">Libros Relacionados</h2>
+    <div class="related-books__grid">
+        {{foreach libros_relacionados}}
+        <div class="related-book">
+            <a href="{{urlDetalle}}" class="related-book__link">
+                <div class="related-book__image-container">
+                    <img src="{{imagenUrl}}" alt="{{titulo}}" class="related-book__image">
+                    <div class="related-book__overlay">
+                        <span class="related-book__price">L. {{precio}}</span>
+                    </div>
+                </div>
+                <div class="related-book__info">
+                    <h3 class="related-book__title">{{titulo}}</h3>
+                    <p class="related-book__author">{{autor}}</p>
+                </div>
+            </a>
+        </div>
+        {{endfor libros_relacionados}}
+    </div>
+</section>
+{{endif libros_relacionados}}
