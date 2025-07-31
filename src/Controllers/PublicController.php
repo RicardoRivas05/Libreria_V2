@@ -64,14 +64,20 @@ abstract class PublicController implements IController
     }
 
     protected function getCartCounter()
-    {
-        if (\Utilities\Security::isLogged()) {
-            $cartItems = \Dao\Cart\Cart::getAuthCart(\Utilities\Security::getUserId());
-            \Utilities\Context::setContext("CART_ITEMS", count($cartItems));
-        } else {
-            $annonCod = \Utilities\Cart\CartFns::getAnnonCartCode();
-            $cartItems = \Dao\Cart\Cart::getAnonCart($annonCod);
-            \Utilities\Context::setContext("CART_ITEMS", count($cartItems));
-        }
+{
+    if (\Utilities\Security::isLogged()) {
+        $cartItems = \Dao\Cart\Cart::getAuthCart(\Utilities\Security::getUserId());
+        \Utilities\Context::setContext("CART_ITEMS", count($cartItems));
+    } else {
+        // 🚫 Comentar esta parte si no tienes carrito anónimo implementado
+        // $annonCod = \Utilities\Cart\CartFns::getAnnonCartCode();
+        // $cartItems = \Dao\Cart\Cart::getAnonCart($annonCod);
+        // \Utilities\Context::setContext("CART_ITEMS", count($cartItems));
+
+        // ✅ Alternativa temporal segura
+        \Utilities\Context::setContext("CART_ITEMS", 0);
     }
+
+}
+
 }
