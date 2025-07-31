@@ -52,10 +52,10 @@
                         <td style="padding: 1rem;">
                             <div style="display: flex; align-items: center; gap: 1rem;">
                                 <div style="width: 60px; height: 80px; background: #f5f5f5; border-radius: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;">
-                                    <img src="/3P/Libreria_V2/public/imgs/libros/{{codLibro}}.jpg" 
+                                    <img src="public/imgs/libros/{{codLibro}}.jpg" 
                                          alt="{{nombre}}"
                                          style="max-height: 100%; max-width: 100%; object-fit: contain;"
-                                         onerror="this.src='/3P/Libreria_V2/public/imgs/libros/default.jpg'">
+                                         onerror="this.src='public/imgs/libros/default.jpg'">
                                 </div>
                                 <div>
                                     <div style="font-weight: 600; color: #212529; margin-bottom: 0.25rem;">{{nombre}}</div>
@@ -135,11 +135,7 @@
                     <span style="font-size: 1.2rem; font-weight: 700; color: #e74c3c;">L. {{total}}</span>
                 </div>
                 
-                <button type="button" 
-                        onclick="alert('Funcionalidad de checkout en desarrollo')"
-                        style="width: 100%; background: #007bff; color: white; border: none; padding: 0.75rem; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 1rem;">
-                    Proceder al Pago
-                </button>
+                <div id="paypal-button-container"></div>
                 
                 <div style="margin-top: 1rem; text-align: center;">
                     <small style="color: #6c757d;">{{totalItems}} libro(s) en tu carrito</small>
@@ -148,3 +144,24 @@
         </div>
     {{endif carritoVacio}}
 </div>
+
+<script src="https://www.paypal.com/sdk/js?client-id={{PAYPAL_CLIENT_ID}}&currency=USD"></script>
+<script>
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: '{{totalUSD}}'
+                    },
+                    description: "Compra en Librería ({{totalItems}} libro(s))"
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                window.location.href = "index.php?page=Checkout_Confirmacion&paymentId=" + data.orderID + "&payer=" + details.payer.name.given_name;
+            });
+        }
+    }).render('#paypal-button-container');
+</script>
