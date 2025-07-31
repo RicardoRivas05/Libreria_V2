@@ -1,73 +1,63 @@
-CREATE TABLE users (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    role ENUM('customer', 'admin') NOT NULL DEFAULT 'customer',
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+CREATE DATABASE IF NOT EXISTS bookstore CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE bookstore;
+
+--  Usuarios
+CREATE TABLE usuarios (
+    usuarioId INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    correo VARCHAR(100) UNIQUE,
+    clave VARCHAR(255),
+    tipo ENUM('cliente', 'admin') DEFAULT 'cliente',
+    estado ENUM('activo', 'inactivo') DEFAULT 'activo',
+    creadoEn DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE authors (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
+-- Libros
+CREATE TABLE libros (
+    libroId INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255),
+    autor VARCHAR(255),
+    genero VARCHAR(100),
+    descripcion TEXT,
+    precio DECIMAL(10,2),
+    imagenUrl VARCHAR(255),
+    destacado BOOLEAN DEFAULT 0,
+    creadoEn DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE categories (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL UNIQUE
+--  Carrito (temporal por sesión)
+CREATE TABLE carrito (
+    carritoId INT AUTO_INCREMENT PRIMARY KEY,
+    usuarioId INT,
+    libroId INT,
+    cantidad INT DEFAULT 1,
+    agregadoEn DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuarioId) REFERENCES usuarios(usuarioId),
+    FOREIGN KEY (libroId) REFERENCES libros(libroId)
 );
 
-CREATE TABLE books (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(150) NOT NULL,
-    description TEXT,
-    isbn VARCHAR(20) UNIQUE,
-    price DECIMAL(10, 2) NOT NULL,
-    stock INT UNSIGNED NOT NULL DEFAULT 0,
-    published_year YEAR,
-    cover_image VARCHAR(255),
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+-- Transacciones
+CREATE TABLE transacciones (
+    transaccionId INT AUTO_INCREMENT PRIMARY KEY,
+    usuarioId INT,
+    total DECIMAL(10,2),
+    estado ENUM('pagado', 'fallido') DEFAULT 'pagado',
+    metodoPago VARCHAR(50),
+    fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuarioId) REFERENCES usuarios(usuarioId)
 );
 
-CREATE TABLE book_authors (
-    book_id INT UNSIGNED NOT NULL,
-    author_id INT UNSIGNED NOT NULL,
-    PRIMARY KEY (book_id, author_id),
-    FOREIGN KEY (book_id) REFERENCES books (id) ON DELETE CASCADE,
-    FOREIGN KEY (author_id) REFERENCES authors (id) ON DELETE CASCADE
+--  Detalle de Transacciones
+CREATE TABLE transaccion_detalle (
+    detalleId INT AUTO_INCREMENT PRIMARY KEY,
+    transaccionId INT,
+    libroId INT,
+    cantidad INT,
+    precioUnitario DECIMAL(10,2),
+    FOREIGN KEY (transaccionId) REFERENCES transacciones(transaccionId),
+    FOREIGN KEY (libroId) REFERENCES libros(libroId)
 );
 
-CREATE TABLE book_categories (
-    book_id INT UNSIGNED NOT NULL,
-    category_id INT UNSIGNED NOT NULL,
-    PRIMARY KEY (book_id, category_id),
-    FOREIGN KEY (book_id) REFERENCES books (id) ON DELETE CASCADE,
-    FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE
-);
-
-CREATE TABLE carts (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    user_id INT UNSIGNED NOT NULL,
-    status ENUM(
-        'open',
-        'ordered',
-        'abandoned'
-    ) NOT NULL DEFAULT 'open',
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
-);
-
-CREATE TABLE cart_items (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    cart_id INT UNSIGNED NOT NULL,
-    book_id INT UNSIGNED NOT NULL,
-    quantity INT UNSIGNED NOT NULL DEFAULT 1,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (cart_id) REFERENCES carts (id) ON DELETE CASCADE,
-    FOREIGN KEY (book_id) REFERENCES books (id) ON DELETE CASCADE,
-    UNIQUE KEY uniq_cart_book (cart_id, book_id)
-);
+-- Usuario Admin de prueba
+INSERT INTO usuarios (nombre, correo, clave, tipo)
+VALUES ('Admin', 'admin@libros.com', SHA2('admin123', 256), 'admin');

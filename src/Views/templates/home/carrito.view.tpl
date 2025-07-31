@@ -34,6 +34,11 @@
 
 <!-- Contenido del carrito -->
 <div style="max-width: 1000px; margin: 2rem auto; padding: 1rem 2rem;">
+    {{if carritoVacio}}
+        <div style="text-align: center; color: #999; font-size: 1.2rem; padding: 3rem 0;">
+            Tu carrito está vacío.
+        </div>
+    {{else}}
         <!-- Tabla del carrito -->
         <div style="background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
             <table style="width: 100%; border-collapse: collapse;">
@@ -134,13 +139,10 @@
                     <span style="font-size: 1.1rem; font-weight: 600; color: #212529;">Total:</span>
                     <span style="font-size: 1.2rem; font-weight: 700; color: #e74c3c;">L. {{total}}</span>
                 </div>
-                
-                <button type="button" 
-                        onclick="alert('Funcionalidad de checkout en desarrollo')"
-                        style="width: 100%; background: #007bff; color: white; border: none; padding: 0.75rem; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 1rem;">
-                    Proceder al Pago
-                </button>
-                
+
+                <!-- PayPal button -->
+                <div id="paypal-button-container"></div>
+
                 <div style="margin-top: 1rem; text-align: center;">
                     <small style="color: #6c757d;">{{totalItems}} libro(s) en tu carrito</small>
                 </div>
@@ -148,3 +150,26 @@
         </div>
     {{endif carritoVacio}}
 </div>
+
+<!-- SDK PayPal -->
+<script src="https://www.paypal.com/sdk/js?client-id={{PAYPAL_CLIENT_ID}}&currency=USD"></script>
+<script>
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: '{{totalUSD}}'
+                    },
+                    description: "Compra en Librería ({{totalItems}} libro(s))"
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                window.location.href = "index.php?page=Checkout_Confirmacion&paymentId=" + data.orderID + "&payer=" + details.payer.name.given_name;
+            });
+        }
+    }).render('#paypal-button-container');
+</script>
+index.php?page=Home_Carrito

@@ -1,4 +1,5 @@
 <?php
+
 namespace Controllers\Home;
 
 use Controllers\PublicController;
@@ -11,35 +12,31 @@ class Carrito extends PublicController
     {
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
-        
-        // Inicializar carrito en sesión si no existe
+
         if (!isset($_SESSION['carrito'])) {
             $_SESSION['carrito'] = [];
         }
-        
-        // Procesar acciones del carrito
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->procesarAccion();
         }
-        
-        // Calcular totales y preparar datos del carrito
+
         $subtotal = 0;
         $totalItems = 0;
         $carritoConSubtotales = [];
-        
+
         foreach ($_SESSION['carrito'] as $codLibro => $item) {
-            // Asegurarnos que todos los campos necesarios existen
             if (!isset($item['codLibro'], $item['nombre'], $item['precio'], $item['cantidad'])) {
                 continue;
             }
-            
+
             $precio = floatval($item['precio']);
             $cantidad = intval($item['cantidad']);
             $itemSubtotal = $precio * $cantidad;
-            
+
             $subtotal += $itemSubtotal;
             $totalItems += $cantidad;
-            
+
             $carritoConSubtotales[] = [
                 'codLibro' => $item['codLibro'],
                 'nombre' => $item['nombre'],
@@ -48,10 +45,10 @@ class Carrito extends PublicController
                 'subtotal' => number_format($itemSubtotal, 2)
             ];
         }
-        
-        $impuesto = $subtotal * 0.15; // 15% de impuesto
+
+        $impuesto = $subtotal * 0.15;
         $total = $subtotal + $impuesto;
-        
+
         $viewData = [
             "SITE_TITLE" => "Carrito de Compras - Biblioteca Virtual",
             "BASE_DIR" => Context::getContextByKey("BASE_DIR"),
@@ -63,30 +60,31 @@ class Carrito extends PublicController
             "totalItems" => $totalItems,
             "carritoVacio" => empty($carritoConSubtotales),
             "mensaje" => $_SESSION['mensaje_carrito'] ?? "",
-            "USE_URLREWRITE" => "0"
+            "USE_URLREWRITE" => "0",
+            "PAYPAL_CLIENT_ID" => Context::getEnv("PAYPAL_CLIENT_ID")
         ];
-        
-        // Limpiar mensaje después de mostrarlo
+
         unset($_SESSION['mensaje_carrito']);
         Renderer::render("home/carrito", $viewData);
     }
-    
+
     private function procesarAccion(): void
     {
         $accion = $_POST['accion'] ?? '';
         $codLibro = $_POST['codLibro'] ?? '';
-        
+
         switch ($accion) {
             case 'agregar':
                 $this->agregarAlCarrito();
                 break;
-                
             case 'eliminar':
                 $this->eliminarDelCarrito($codLibro);
                 break;
-                
             case 'actualizar':
                 $this->actualizarCantidad($codLibro);
+                break;
+            case 'vaciar':
+                $this->vaciarCarrito();
                 break;
         }
     }
@@ -101,8 +99,7 @@ class Carrito extends PublicController
         $nombre = $_POST['nombre'];
         $precio = floatval($_POST['precio']);
         $cantidad = intval($_POST['cantidad']);
-        
-        // Verificar si el libro ya está en el carrito
+
         if (isset($_SESSION['carrito'][$codLibro])) {
             $_SESSION['carrito'][$codLibro]['cantidad'] += $cantidad;
         } else {
@@ -113,7 +110,7 @@ class Carrito extends PublicController
                 'cantidad' => $cantidad
             ];
         }
-        
+
         $_SESSION['mensaje_carrito'] = "Libro agregado al carrito";
     }
 
@@ -130,7 +127,7 @@ class Carrito extends PublicController
         if (!isset($_POST['cantidad']) || !isset($_SESSION['carrito'][$codLibro])) {
             return;
         }
-        
+
         $nuevaCantidad = intval($_POST['cantidad']);
         if ($nuevaCantidad > 0) {
             $_SESSION['carrito'][$codLibro]['cantidad'] = $nuevaCantidad;
@@ -139,6 +136,7 @@ class Carrito extends PublicController
             $this->eliminarDelCarrito($codLibro);
         }
     }
+
     private function vaciarCarrito(): void
     {
         $_SESSION['carrito'] = [];
