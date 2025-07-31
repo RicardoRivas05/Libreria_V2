@@ -1,0 +1,268 @@
+
+.historial-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+.historial-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.historial-header h1 {
+    margin: 0 0 20px 0;
+    font-size: 2.5em;
+    font-weight: 300;
+}
+
+.historial-stats {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    min-width: 150px;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 0.9em;
+    opacity: 0.9;
+}
+
+/* Lista de transacciones */
+.transacciones-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.transaccion-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #e9ecef;
+}
+
+.transaccion-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+}
+
+.transaccion-header {
+    background: #f8f9fa;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e9ecef;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.transaccion-info h3 {
+    margin: 0 0 5px 0;
+    color: #495057;
+    font-size: 1.3em;
+}
+
+.transaccion-info .fecha {
+    margin: 0;
+    color: #6c757d;
+    font-size: 0.9em;
+}
+
+.transaccion-status {
+    text-align: center;
+}
+.estado {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.estado-completada {
+    background: #d4edda;
+    color: #155724;
+}
+
+.estado-pendiente {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.estado-cancelada {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.metodo-pago {
+    margin: 0;
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+.transaccion-total {
+    text-align: right;
+}
+
+.total-amount {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #28a745;
+}
+
+
+.transaccion-detalles {
+    padding: 20px;
+}
+
+.transaccion-detalles h4 {
+    margin: 0 0 15px 0;
+    color: #495057;
+    font-size: 1.1em;
+}
+
+.libros-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.libro-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+}
+
+.libro-info h5 {
+    margin: 0 0 5px 0;
+    color: #495057;
+    font-size: 1em;
+}
+
+.libro-info p {
+    margin: 2px 0;
+    font-size: 0.85em;
+    color: #6c757d;
+}
+
+.libro-subtotal {
+    font-weight: bold;
+    color: #28a745;
+    font-size: 1.1em;
+}
+
+
+.no-historial {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+.no-historial-icon {
+    font-size: 4em;
+    margin-bottom: 20px;
+}
+
+.no-historial h2 {
+    color: #495057;
+    margin-bottom: 10px;
+}
+
+.no-historial p {
+    color: #6c757d;
+    margin-bottom: 30px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 6px;
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    text-decoration: none;
+    color: white;
+}
+
+
+@media (max-width: 768px) {
+    .historial-container {
+        padding: 10px;
+    }
+    
+    .historial-header {
+        padding: 20px;
+    }
+    
+    .historial-header h1 {
+        font-size: 2em;
+    }
+    
+    .historial-stats {
+        justify-content: center;
+    }
+    
+    .transaccion-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .transaccion-status {
+        text-align: left;
+    }
+    
+    .transaccion-total {
+        text-align: left;
+        width: 100%;
+    }
+    
+    .libro-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .libro-subtotal {
+        align-self: flex-end;
+    }
+}
