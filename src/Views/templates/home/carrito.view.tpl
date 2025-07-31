@@ -34,11 +34,6 @@
 
 <!-- Contenido del carrito -->
 <div style="max-width: 1000px; margin: 2rem auto; padding: 1rem 2rem;">
-    {{if carritoVacio}}
-        <div style="text-align: center; color: #999; font-size: 1.2rem; padding: 3rem 0;">
-            Tu carrito está vacío.
-        </div>
-    {{else}}
         <!-- Tabla del carrito -->
         <div style="background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
             <table style="width: 100%; border-collapse: collapse;">

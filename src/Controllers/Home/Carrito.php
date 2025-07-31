@@ -83,9 +83,6 @@ class Carrito extends PublicController
             case 'actualizar':
                 $this->actualizarCantidad($codLibro);
                 break;
-            case 'vaciar':
-                $this->vaciarCarrito();
-                break;
         }
     }
 
