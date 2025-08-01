@@ -22,7 +22,7 @@ class Home extends PublicController
             "PUBLIC_NAVIGATION" => [
                 ["nav_url" => "index.php?page=Libros_Libros", "nav_label" => "Catálogo"],
                 ["nav_url" => "index.php?page=Home_Carrito", "nav_label" => "Carrito"],
-                ["nav_url" => "index.php?page=Sec_Login", "nav_label" => "Iniciar Sesión"]
+                ["nav_url" => "index.php?page=Home_Login", "nav_label" => "Iniciar Sesión"]
             ],
             "usuario" => $_SESSION["userName"] ?? "Invitado",
             "libros" => [

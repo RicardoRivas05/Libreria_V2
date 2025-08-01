@@ -4,6 +4,7 @@ namespace Controllers\Sec;
 
 use Controllers\PublicController;
 use \Utilities\Validators;
+use Error;
 use Exception;
 
 class Register extends PublicController
@@ -32,7 +33,7 @@ class Register extends PublicController
             if (!$this->hasErrors) {
                 try{
                     if (\Dao\Security\Security::newUsuario($this->txtEmail, $this->txtPswd)) {
-                        \Utilities\Site::redirectToWithMsg("index.php?page=sec_login", "¡Usuario Registrado Satisfactoriamente!");
+                        \Utilities\Site::redirectToWithMsg("index.php?page=Home_Login", "¡Usuario Registrado Satisfactoriamente!");
                     }
                 } catch (Error $ex){
                     die($ex);

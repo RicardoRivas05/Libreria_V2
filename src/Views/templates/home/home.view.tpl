@@ -12,7 +12,7 @@
        style="display: inline-block; background: #eee; color: #444; padding: 0.5rem 1.2rem; margin-right: 1rem; text-decoration: none; font-weight: 600; border-radius: 4px;">
        Carrito de Compras
     </a>
-    <a href="index.php?page=Sec_Login" 
+    <a href="index.php?page=Home_Login" 
        style="display: inline-block; background: #eee; color: #444; padding: 0.5rem 1.2rem; text-decoration: none; font-weight: 600; border-radius: 4px;">
        Iniciar Sesión
     </a>
