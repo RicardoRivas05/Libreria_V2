@@ -58,7 +58,7 @@
             <div class="no-historial-icon">📚</div>
             <h2>Aún no has realizado compras</h2>
             <p>Explora nuestro catálogo y realiza tu primera compra</p>
-            <a href="index.php?page=Home" class="btn-primary">Ver Catálogo</a>
+            <a href="index.php?page=Home_Home" class="btn-primary">Ver Catálogo</a>
         </div>
     {{endifnot historial}}
 </div>

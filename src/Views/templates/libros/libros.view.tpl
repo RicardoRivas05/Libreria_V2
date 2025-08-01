@@ -1,9 +1,9 @@
 <section style="max-width: 1000px; margin: 1rem auto; padding: 1rem 2rem; text-align: center;">
-    <a href="index.php?page=Home" 
+    <a href="index.php?page=Home_Home" 
        style="display: inline-block; background: #eee; color: #444; padding: 0.5rem 1.2rem; margin-right: 1rem; text-decoration: none; font-weight: 600; border-radius: 4px;">
        Inicio
     </a>
-    <a href="index.php?page=Catalogo"
+    <a href="index.php?page=Libros_Libros"
        style="display: inline-block; background: #eee; color: #444; padding: 0.5rem 1.2rem; margin-right: 1rem; text-decoration: none; font-weight: 600; border-radius: 4px;">
        Catalogo
     </a>
