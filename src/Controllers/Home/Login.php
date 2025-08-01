@@ -24,15 +24,24 @@ class Login extends PublicController
         $email = $_POST["email"] ?? "";
         $password = $_POST["password"] ?? "";
 
+        $registeredUsers = $_SESSION["registeredUsers"] ?? [];
+
+        if (isset($registeredUsers[$email]) && $registeredUsers[$email] === $password) {
+            $_SESSION["userName"] = explode('@', $email)[0];
+            $_SESSION["userEmail"] = $email;
+            header("Location: index.php?page=Home_Home");
+            exit;
+        }
+
         if ($email === "admin@biblioteca.com" && $password === "admin123") {
             $_SESSION["userName"] = "Administrador";
             $_SESSION["userEmail"] = $email;
             header("Location: index.php?page=Home_Home");
             exit;
-        } else {
-            $_SESSION["loginError"] = "Correo o contraseña incorrectos.";
-            header("Location: index.php?page=Home_Login");
-            exit;
         }
+
+        $_SESSION["loginError"] = "Correo o contraseña incorrectos.";
+        header("Location: index.php?page=Home_Login");
+        exit;
     }
 }
