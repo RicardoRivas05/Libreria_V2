@@ -45,7 +45,7 @@ class Register extends PublicController
         $_SESSION["userName"] = $email;
         $_SESSION["userEmail"] = $email;
       
-        header("Location: index.php?page=Home_Home");
+        header("Location: index.php?page=Home_Login");
         exit;
     }
 }
