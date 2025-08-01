@@ -26,4 +26,13 @@
             Iniciar Sesión
         </button>
     </form>
+
+    <p style="margin-top: 1.5rem; text-align: center;">
+        ¿No tienes cuenta? 
+        <a href="http://localhost/MVC2026/index.php?page=Home_Register" 
+           style="color: #007bff; text-decoration: none; font-weight: 600;">
+            Regístrate aquí
+        </a>
+    </p>
 </section>
+
